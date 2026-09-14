@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed Nour — Packaging Graphic Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Archivo:wght@400;500;600;700&family=Archivo+Expanded:wght@700&family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper: #d9c8a1;
+    --paper-light: #ece2c6;
+    --card: #f4ecd8;
+    --ink: #17233a;
+    --ink-soft: #3d4c68;
+    --rule: #a9895a;
+    --rule-light: #c7ac7c;
+    --cyan: #00aeef;
+    --magenta: #e6007e;
+    --yellow: #ffcc00;
+    --paper-shadow: rgba(23,35,58,0.18);
+    --maxw: 980px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(23,35,58,0.05) 1px, transparent 1.4px) 0 0/14px 14px,
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Archivo', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body[dir="rtl"]{ font-family: 'Tajawal', sans-serif; }
+
+  ::selection{ background: var(--yellow); color: var(--ink); }
+
+  a{ color: inherit; }
+
+  /* ---------- lang toggle ---------- */
+  .langbar{
+    position: fixed;
+    top: 18px;
+    inset-inline-end: 18px;
+    z-index: 50;
+    display: flex;
+    gap: 2px;
+    background: var(--ink);
+    border-radius: 3px;
+    padding: 3px;
+    box-shadow: 0 4px 14px var(--paper-shadow);
+  }
+  .langbar button{
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    border: none;
+    background: transparent;
+    color: #cdd6e4;
+    padding: 7px 12px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .langbar button.active{
+    background: var(--yellow);
+    color: var(--ink);
+  }
+
+  /* ---------- crop-mark frame ---------- */
+  .sheet{
+    max-width: var(--maxw);
+    margin: 48px auto;
+    position: relative;
+    padding: 34px;
+  }
+  .crop{
+    position: absolute;
+    width: 22px; height: 22px;
+    pointer-events: none;
+  }
+  .crop::before, .crop::after{
+    content:"";
+    position:absolute;
+    background: var(--ink);
+  }
+  .crop::before{ width:100%; height:1.4px; top:50%; transform:translateY(-50%); }
+  .crop::after{ height:100%; width:1.4px; left:50%; transform:translateX(-50%); }
+  .crop.tl{ top:6px; left:6px; }
+  .crop.tr{ top:6px; right:6px; }
+  .crop.bl{ bottom:6px; left:6px; }
+  .crop.br{ bottom:6px; right:6px; }
+
+  .colorbar{
+    display:flex;
+    height:6px;
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 1px;
+    overflow:hidden;
+  }
+  .colorbar span{ flex:1; }
+  .colorbar .c{ background: var(--cyan); }
+  .colorbar .m{ background: var(--magenta); }
+  .colorbar .y{ background: var(--yellow); }
+  .colorbar .k{ background: var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    background: var(--card);
+    border: 1.4px solid var(--ink);
+    border-radius: 4px;
+    padding: 44px 40px 34px;
+    position: relative;
+    box-shadow: 0 10px 0 -6px var(--rule), 0 18px 32px -18px var(--paper-shadow);
+  }
+  .platetag{
+    font-family:'Archivo', sans-serif;
+    font-size: 11px;
+    font-weight:700;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom: 18px;
+  }
+  .platetag .dot{
+    width:7px;height:7px;border-radius:50%;
+    background: var(--magenta);
+    display:inline-block;
+  }
+  [dir="rtl"] .platetag{ letter-spacing:0; }
+
+  .hero h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: clamp(42px, 7vw, 74px);
+    line-height: 0.96;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  [dir="rtl"] .hero h1{ font-family:'Cairo', sans-serif; font-weight:900; }
+
+  .hero h2{
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin: 0 0 26px;
+    border-inline-start: 4px solid var(--magenta);
+    padding-inline-start: 12px;
+  }
+  [dir="rtl"] .hero h2{ font-weight:700; }
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 34px;
+    margin-top: 8px;
+  }
+  @media (max-width: 720px){ .hero-grid{ grid-template-columns: 1fr; } }
+
+  .summary{
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+
+  .contactcard{
+    background: var(--paper-light);
+    border: 1px solid var(--rule-light);
+    border-radius: 3px;
+    padding: 18px 20px;
+    font-size: 14px;
+  }
+  .contactcard div{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--rule-light);
+  }
+  .contactcard div:last-child{ border-bottom:none; }
+  .contactcard .k{
+    font-weight:700;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    color: var(--ink-soft);
+    min-width: 66px;
+    padding-top:1px;
+  }
+  [dir="rtl"] .contactcard .k{ letter-spacing:0; }
+
+  /* ---------- sections ---------- */
+  section.block{ margin-top: 40px; }
+
+  .sectionhead{
+    display:flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .sectionhead .num{
+    font-family:'Fraunces', serif;
+    font-size: 15px;
+    color: var(--magenta);
+    font-weight:700;
+  }
+  [dir="rtl"] .sectionhead .num{ font-family:'Cairo', sans-serif; }
+  .sectionhead h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size: 26px;
+    margin:0;
+    color: var(--ink);
+  }
+  [dir="rtl"] .sectionhead h3{ font-family:'Cairo', sans-serif; font-weight:800; }
+  .sectionhead .rule{
+    flex:1;
+    height:1px;
+    background: repeating-linear-gradient(to right, var(--rule) 0 6px, transparent 6px 10px);
+  }
+
+  /* experience */
+  .job{
+    display:grid;
+    grid-template-columns: 150px 1fr;
+    gap: 22px;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule-light);
+  }
+  .job:last-child{ padding-bottom: 4px; }
+  @media (max-width: 640px){ .job{ grid-template-columns: 1fr; gap:6px; } }
+
+  .job .when{
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .job .when .tag{
+    display:inline-block;
+    margin-top:6px;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    background: var(--ink);
+    color: var(--paper-light);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  [dir="rtl"] .job .when .tag{ letter-spacing:0; }
+
+  .job h4{
+    font-size: 17px;
+    margin: 0 0 3px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .job .place{
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .job ul{
+    margin: 0;
+    padding-inline-start: 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .job li{ margin-bottom: 3px; }
+
+  /* education */
+  .edu{
+    background: var(--card);
+    border: 1px solid var(--ink);
+    border-radius: 3px;
+    padding: 20px 24px;
+    display:flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .edu h4{ margin:0 0 4px; font-size:17px; }
+  .edu .place{ font-size:13.5px; color: var(--ink-soft); }
+  .edu .when{ font-size: 13px; font-weight:700; color: var(--ink-soft); white-space:nowrap; }
+
+  /* skills as ink gauges */
+  .skills{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 30px;
+  }
+  @media (max-width: 640px){ .skills{ grid-template-columns: 1fr; } }
+  .skillrow{ }
+  .skillrow .label{
+    display:flex; justify-content: space-between;
+    font-size: 13.5px; font-weight:600; margin-bottom: 6px;
+  }
+  .skillrow .label span:last-child{ color: var(--ink-soft); font-weight:500; font-size:12px; }
+  .gauge{
+    height: 8px;
+    background: var(--paper-light);
+    border: 1px solid var(--rule-light);
+    border-radius: 2px;
+    overflow: hidden;
+    display:flex;
+  }
+  .gauge i{
+    display:block;
+    height:100%;
+    background: repeating-linear-gradient(45deg, var(--ink) 0 3px, var(--ink-soft) 3px 6px);
+  }
+
+  /* footer */
+  footer{
+    margin-top: 50px;
+    text-align:center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    padding-bottom: 10px;
+  }
+
+  [data-lang]{ display:none; }
+  [data-lang].active{ display:block; }
+  span[data-lang].active{ display:inline; }
+
+</style>
+</head>
+<body dir="ltr">
+
+<div class="langbar">
+  <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+  <button id="btn-ar" onclick="setLang('ar')">AR</button>
+</div>
+
+<div class="sheet">
+  <span class="crop tl"></span><span class="crop tr"></span>
+  <span class="crop bl"></span><span class="crop br"></span>
+
+  <div class="colorbar"><span class="c"></span><span class="m"></span><span class="y"></span><span class="k"></span></div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="platetag">
+      <span class="dot"></span>
+      <span data-lang="en" class="active">PLATE PROOF — PACKAGING &amp; OFFSET PRINT</span>
+      <span data-lang="ar">بروفة طباعة — تغليف وأوفست</span>
+    </div>
+
+    <h1>
+      <span data-lang="en" class="active">Ahmed Nour</span>
+      <span data-lang="ar">أحمد نور</span>
+    </h1>
+    <h2>
+      <span data-lang="en" class="active">Packaging Graphic Designer &amp; CTP Operator</span>
+      <span data-lang="ar">مصمم جرافيك ومشغل ماكينات CTP</span>
+    </h2>
+
+    <div class="hero-grid">
+      <div class="summary">
+        <p data-lang="en" class="active">I'm a graphic designer specializing in offset printing for packaging boxes and cardboard. I translate visual identities into high-quality, production-ready packaging solutions — developing professional designs that balance aesthetics and marketing with the technical demands of printing: preparing CMYK-standard print files, controlling color separation, adjusting bleed and die-cut settings, and resolving trapping and overprint issues for accurate results on press.</p>
+        <p data-lang="ar">أنا مصمم جرافيك متخصص في الطباعة الأوفست لمجال التعبئة والتغليف والكرتون، لدي خبرة عملية في ترجمة الهويات البصرية إلى حلول تغليف عالية الجودة وجاهزة للإنتاج. أقوم بتطوير تصميمات احترافية تراعي الجوانب الجمالية والتسويقية مع الالتزام بالمتطلبات الفنية للطباعة، مثل إعداد ملفات الطباعة وفقًا لمعايير CMYK، والتحكم في فصل الألوان، وضبط إعدادات الهوامش والقطع، ومعالجة مشكلات التداخل والطباعة المتراكبة لضمان نتائج دقيقة على آلات الطباعة.</p>
+      </div>
+
+      <div class="contactcard">
+        <div><span class="k" data-lang="en">EMAIL</span><span class="k" data-lang="ar">البريد</span><span>ahmedfainaliser@gmail.com</span></div>
+        <div><span class="k" data-lang="en">PHONE</span><span class="k" data-lang="ar">الهاتف</span><span>+20 10 4016 7897</span></div>
+        <div>
+          <span class="k" data-lang="en">LOCATION</span><span class="k" data-lang="ar">العنوان</span>
+          <span data-lang="en" class="active">4 Petrol St., El Marg, Cairo, 11721</span>
+          <span data-lang="ar">4 شارع بترول المرج، القاهرة، 11721</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section class="block">
+    <div class="sectionhead">
+      <span class="num">01</span>
+      <h3><span data-lang="en" class="active">Experience</span><span data-lang="ar">الخبرات</span></h3>
+      <span class="rule"></span>
+    </div>
+
+    <div class="job">
+      <div class="when">
+        <span data-lang="en" class="active">Jan 2022 — Present</span>
+        <span data-lang="ar">يناير 2022 — حتى الآن</span>
+        <div class="tag" data-lang="en" class="active">CURRENT</div>
+        <div class="tag" data-lang="ar">الحالية</div>
+      </div>
+      <div>
+        <h4><span data-lang="en" class="active">Product Packaging Designer</span><span data-lang="ar">مصمم تغليف منتجات</span></h4>
+        <div class="place"><span data-lang="en" class="active">Sama Print, Troll Street — Ain Shams</span><span data-lang="ar">سما برينت، شارع الترول — عين شمس</span></div>
+        <ul>
+          <li><span data-lang="en" class="active">Streamlined packaging processes, cutting production time by 15%.</span><span data-lang="ar">تبسيط عمليات التغليف مما أدى إلى تقليل وقت الإنتاج بنسبة 15%.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="when">
+        <span data-lang="en" class="active">Jan 2018 — Jan 2022</span>
+        <span data-lang="ar">يناير 2018 — يناير 2022</span>
+      </div>
+      <div>
+        <h4><span data-lang="en" class="active">CTP Operator</span><span data-lang="ar">مشغل ماكينات CTP</span></h4>
+        <div class="place"><span data-lang="en" class="active">Golden Print, Troll Street — Ain Shams</span><span data-lang="ar">جولدن برينت، شارع الترول — عين شمس</span></div>
+        <ul>
+          <li><span data-lang="en" class="active">Expertly operated CTP machinery to maximize production efficiency.</span><span data-lang="ar">تشغيل آلات CTP بخبرة لزيادة كفاءة الإنتاج إلى أقصى حد.</span></li>
+          <li><span data-lang="en" class="active">Achieved a 20% increase in output through process optimization.</span><span data-lang="ar">تحقيق زيادة بنسبة 20% في الإنتاج من خلال تحسين العمليات.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="when">
+        <span data-lang="en" class="active">Jan 2002 — Jan 2018</span>
+        <span data-lang="ar">يناير 2002 — يناير 2018</span>
+      </div>
+      <div>
+        <h4><span data-lang="en" class="active">Product Packaging Designer</span><span data-lang="ar">مصمم تغليف منتجات</span></h4>
+        <div class="place"><span data-lang="en" class="active">Bayan Print, Obour City — El Shabab Industrial Zone</span><span data-lang="ar">مطبعة بيان، مدينة العبور — المنطقة الصناعية الشباب</span></div>
+        <ul>
+          <li><span data-lang="en" class="active">Crafted innovative packaging designs that boosted sales by 30%.</span><span data-lang="ar">صممت تصميمات تغليف مبتكرة ساهمت في زيادة المبيعات بنسبة 30%.</span></li>
+          <li><span data-lang="en" class="active">Leveraged design software to create stunning visuals that attract customers.</span><span data-lang="ar">استخدمت برامج التصميم لإنشاء صور مذهلة تجذب العملاء.</span></li>
+          <li><span data-lang="en" class="active">Conducted user testing to refine designs based on consumer feedback.</span><span data-lang="ar">أجريت اختبارات للمستخدمين لتحسين التصاميم بناءً على ملاحظات المستهلكين.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="block">
+    <div class="sectionhead">
+      <span class="num">02</span>
+      <h3><span data-lang="en" class="active">Education</span><span data-lang="ar">التعليم</span></h3>
+      <span class="rule"></span>
+    </div>
+    <div class="edu">
+      <div>
+        <h4><span data-lang="en" class="active">Bachelor of Mass Communication</span><span data-lang="ar">بكالوريوس في الإعلام</span></h4>
+        <div class="place"><span data-lang="en" class="active">Cairo University, Giza — Graduated with Honors</span><span data-lang="ar">جامعة القاهرة — تخرج بمرتبة الشرف</span></div>
+      </div>
+      <div class="when"><span data-lang="en" class="active">1998 — 2002</span><span data-lang="ar">1998 — 2002</span></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="block">
+    <div class="sectionhead">
+      <span class="num">03</span>
+      <h3><span data-lang="en" class="active">Skills</span><span data-lang="ar">المهارات</span></h3>
+      <span class="rule"></span>
+    </div>
+    <div class="skills" id="skills"></div>
+  </section>
+
+  <footer>
+    <span data-lang="en" class="active">Ahmed Nour · Packaging Graphic Design · Cairo, Egypt</span>
+    <span data-lang="ar">أحمد نور · تصميم جرافيك للتغليف · القاهرة، مصر</span>
+  </footer>
+</div>
+
+<script>
+  const skillsData = [
+    { en:"Packaging Layouts", ar:"تصميم عبوات التغليف", v:92 },
+    { en:"Brand Identity", ar:"هوية العلامة التجارية", v:78 },
+    { en:"Adobe Creative Suite", ar:"مجموعة أدوبي الإبداعية", v:95 },
+    { en:"Typography Design", ar:"تصميم الطباعة", v:88 },
+    { en:"Print Production", ar:"إنتاج الطباعة", v:96 },
+    { en:"Attention to Detail", ar:"الاهتمام بالتفاصيل", v:97 },
+    { en:"Color Theory", ar:"نظرية الألوان", v:90 },
+  ];
+
+  const skillsWrap = document.getElementById('skills');
+  skillsData.forEach(s=>{
+    const row = document.createElement('div');
+    row.className = 'skillrow';
+    row.innerHTML = `
+      <div class="label">
+        <span><span data-lang="en" class="active">${s.en}</span><span data-lang="ar">${s.ar}</span></span>
+        <span>${s.v}%</span>
+      </div>
+      <div class="gauge"><i style="width:${s.v}%"></i></div>
+    `;
+    skillsWrap.appendChild(row);
+  });
+
+  function setLang(lang){
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang]').forEach(el=>{
+      el.classList.toggle('active', el.getAttribute('data-lang') === lang);
+    });
+    document.getElementById('btn-en').classList.toggle('active', lang==='en');
+    document.getElementById('btn-ar').classList.toggle('active', lang==='ar');
+  }
+  setLang('en');
+</script>
+
+</body>
+</html>
